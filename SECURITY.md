@@ -2,13 +2,13 @@
 
 ## Reporting a Vulnerability
 
-If you believe you have found a security vulnerability in alt-ime-rev,
+If you believe you have found a security vulnerability in alt-ime-rev-plus,
 please report it privately so it can be triaged before public disclosure.
 
 **Preferred channel: GitHub Private Vulnerability Reporting**
 
 Open a private report from the repository's
-[Security tab](https://github.com/yuki0ueda/alt-ime-rev/security/advisories/new).
+[Security tab](https://github.com/tealgreen0503/alt-ime-rev-plus/security/advisories/new).
 This routes the report to the maintainer through GitHub's coordinated
 disclosure flow. Please **do not** open a public issue for security
 vulnerabilities.
@@ -17,7 +17,7 @@ When reporting, please include:
 
 - A clear description of the issue and its potential impact
 - Steps to reproduce (a minimal `.ahk` snippet or hotkey sequence is ideal)
-- The version of alt-ime-rev (tag or commit SHA) and the Windows version
+- The version of alt-ime-rev-plus (tag or commit SHA) and the Windows version
   on which you reproduced it
 - Any relevant log output from `ime_debug.log`
 

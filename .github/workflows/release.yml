@@ -3,22 +3,22 @@ name: Build & Release
 on:
   push:
     tags:
-      - 'v*'
+      - "plus-*"
   workflow_dispatch:
 
 permissions:
   contents: write
 
 env:
-  AHK_VERSION: '2.0.23'
-  AHK2EXE_VERSION: '1.1.37.02a2'
-  MAIN_SCRIPT: 'src/alt-ime-rev.ahk'
-  OUTPUT_BASENAME: 'alt-ime-rev'
+  AHK_VERSION: "2.0.23"
+  AHK2EXE_VERSION: "1.1.37.02a2"
+  MAIN_SCRIPT: "src/alt-ime-rev.ahk"
+  OUTPUT_BASENAME: "alt-ime-rev-plus"
 
 # AutoHotkey v2 の公式配布は x86 (AutoHotkey32.exe) / x64 (AutoHotkey64.exe) のみで、
 # ARM64 ネイティブ base ファイルは存在しない。よって配布バイナリは x64 単一ビルド。
 # Windows 11 on ARM マシンは Microsoft Prism エミュレーション経由で x64 .exe を実行する。
-# alt-ime-rev はホットキーユーティリティで API 呼び出しが軽量なため、Prism のオーバーヘッドは実用上問題ない。
+# alt-ime-rev-plus はホットキーユーティリティで API 呼び出しが軽量なため、Prism のオーバーヘッドは実用上問題ない。
 
 jobs:
   build:
@@ -165,7 +165,7 @@ jobs:
   release:
     name: Publish GitHub Release
     needs: [build, package-source]
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/plus-')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout (for CHANGELOG)
@@ -190,8 +190,8 @@ jobs:
         run: |
           set -euo pipefail
           tag="${GITHUB_REF#refs/tags/}"
-          # Match "## [v1.0.0]" with bracket anchors so e.g. a "v1.0" tag does not
-          # accidentally match "## [v1.0.0]" via substring containment.
+          # Match "## [plus-1.0.0]" with bracket anchors so e.g. a "plus-1.0" tag does not
+          # accidentally match "## [plus-1.0.0]" via substring containment.
           awk -v tag="$tag" '
             BEGIN { found=0 }
             /^## / {

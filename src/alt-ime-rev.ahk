@@ -4,11 +4,14 @@
 ;
 ;   左 Alt    空打ち → IME OFF
 ;   右 Alt    空打ち → IME ON
+;   右 Shift  空打ち → _ （Mac-JIS like / US 配列向け）
+;   ; / ' キー → Mac-JIS like にコロン/セミコロン・クォートを入替（US 配列向け）
 ;   Ctrl+Shift+F12   → デバッグモード切替
 ;
 ; Alt を押しながら他キーを叩いた場合は通常の Alt として動作する。
+; 右 Shift を押しながら他キーを叩いた場合は通常の Shift として動作する。
 ; 変更履歴は CHANGELOG.md、ライセンスとクレジットは LICENSE を参照。
-; Repo: https://github.com/yuki0ueda/alt-ime-rev
+; Repo: https://github.com/tealgreen0503/alt-ime-rev-plus
 
 #Include IME.ahk
 
@@ -143,9 +146,30 @@ A_MaxHotkeysPerInterval := 350
     Return
 }
 
+; コロンとセミコロンを入れ替え（Mac-JIS like / US 配列向け）
+$`;:: Send(":")
+$+`;:: Send(";")
+$^`;:: Send("^:")
+$^+`;:: Send("^;")
+$!`;:: Send("!:")
+$!+`;:: Send("!;")
+$^!`;:: Send("^!:")
+$^!+`;:: Send("^!;")
+
+; シングルクォーテーションとダブルクォーテーションを入れ替え（Mac-JIS like / US 配列向け）
+$':: Send('"')
+$+':: Send("'")
+$^':: Send('^"')
+$^+':: Send("^'")
+$!':: Send('!"')
+$!+':: Send("!'")
+$^!':: Send('^!"')
+$^!+':: Send("^!'")
+
 ; 上部メニューがアクティブになるのを抑制 / Xbox Game Bar 起動用仮想キーコードとのバッティング回避 (vk07 -> vkFF)
 *~LAlt::Send ("{Blind}{vkFF}")
 *~RAlt::Send ("{Blind}{vkFF}")
+*~RShift::Send ("{Blind}{vkFF}")
 
 ; 左 Alt 空打ちで IME を OFF
 LAlt up::
@@ -161,6 +185,15 @@ RAlt up::
 {
     if (A_PriorHotkey == "*~RAlt") {
         IME_SET(1)
+    }
+    Return
+}
+
+; 右 Shift 空打ちでアンダーバーを入力（Mac-JIS like / US 配列向け）
+RShift up::
+{
+    if (A_PriorHotkey == "*~RShift") {
+        Send("_")
     }
     Return
 }
